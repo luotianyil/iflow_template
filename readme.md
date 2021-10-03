@@ -1,11 +1,17 @@
 # iflow_template
 基于DOM渲染的 PHP模板引擎 
 
+# 安装
+
+```shell
+composer require iflow/template
+```
 
 # 使用方法
 
-```html
+> 视图文件代码
 
+```html
 <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -43,6 +49,35 @@
 </body>
 </html>
 
+```
+
+> PHP调用代码
+
+```php
+<?php
+    use iflow\template\template;
+    $config = [
+        // 是否开启缓存
+        'cache_enable' => false,
+        // 缓存地址
+        'store_path' => './runtime/template',
+        'view_root_path' => './view' . DIRECTORY_SEPARATOR,
+        'view_suffix' => 'html',
+        'tags' => []
+    ];
+    
+    $template = new template($config);
+    
+    $html = $template -> display("
+        <html>
+            <body>
+                <echo>\$test</echo>
+            </body>
+        </html>
+    ", [
+        'test' => 123
+    ]);
+    $html = $template -> fetch('index');
 ```
 
 查看更多: https://www.yuque.com/youzhiyuandemao/ftorkm/zx0cp0
