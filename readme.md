@@ -18,7 +18,7 @@ composer require iflow/template
         <meta charset="UTF-8">
         <title>测试渲染</title>
         <!--   数值绑定     -->
-        <link rel='stylesheet' :href=\"\$main_css\" />
+        <link rel='stylesheet' :href="$main_css" />
     </head>
     <body>
     <!-- echo输出 与 echo 语法一致 -->
