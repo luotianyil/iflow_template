@@ -27,7 +27,7 @@ class ifInstruction extends instructionAbstract
         if (is_string($attr)) {
             return true;
         }
-        return $this->nextSibling -> getAttributes('i-elseif');
+        return $this->nextSibling -> getAttributes('i-elseif') ?: false;
     }
 
 

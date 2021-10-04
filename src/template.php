@@ -157,7 +157,7 @@ class template implements templateInterfaces
      * @param string $viewPath
      * @return string
      */
-    protected function render(string $viewPath): string
+    public function render(string $viewPath): string
     {
         ob_start();
         ob_implicit_flush(0);
@@ -181,5 +181,15 @@ class template implements templateInterfaces
             throw new templateViewNotFound();
         }
         return true;
+    }
+
+    /**
+     * @param array $data
+     * @return static
+     */
+    public function setData(array $data): static
+    {
+        $this->data = $data;
+        return $this;
     }
 }
