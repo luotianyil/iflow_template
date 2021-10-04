@@ -17,10 +17,14 @@ composer require iflow/template
     <head>
         <meta charset="UTF-8">
         <title>测试渲染</title>
+        <!--   数值绑定     -->
+        <link rel='stylesheet' :href=\"\$main_css\" />
     </head>
     <body>
     <!-- echo输出 与 echo 语法一致 -->
     <echo>$test</echo>
+    <!--  数值绑定  -->
+    <div :style="div_style"></div>
     
     <!-- 调用方法 action: 方法名称, props 方法参数,传参方法 props="$test,$test1,...." -->
     <function action="var_dump" props="$test" />
@@ -36,8 +40,7 @@ composer require iflow/template
         <echo>$test</echo>
     </div>
     <div i-elseif="$test === ''"><echo>$test</echo></div>
-    <!-- i-else 必须要带内容(占位符) 不能为空 -->
-    <div i-else="true">才不是嘞</div>
+    <div i-else>才不是嘞</div>
     <phpscript>
         // PHP 代码块
         $a = "123";
@@ -75,7 +78,9 @@ composer require iflow/template
             </body>
         </html>
     ", [
-        'test' => 123
+        'test' => 123,
+        'main_css' => 'statics/css/main.css',
+        'type_style' => 'margin-top: 10px'
     ]);
     $html = $template -> fetch('index');
 ```

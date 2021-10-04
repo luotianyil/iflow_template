@@ -5,6 +5,7 @@ namespace iflow\template\document\Parser;
 
 use DOMNode;
 use DOMText;
+use iflow\template\document\Parser\utils\AttributeBindValue;
 
 /**
  * @mixin DOMNode
@@ -15,8 +16,12 @@ use DOMText;
 class DOMNodeParser
 {
 
+    protected AttributeBindValue $attributeBindValue;
+
     // 解析 DOMNode
-    public function __construct(protected DOMNode|DOMText $DOMNode) {}
+    public function __construct(protected DOMNode|DOMText $DOMNode) {
+        $this->attributeBindValue = new AttributeBindValue($this);
+    }
 
     /**
      * 获取 attributes
@@ -25,8 +30,7 @@ class DOMNodeParser
      */
     public function getAttributes(
         array|string $keys = ""
-    ): array|string|null
-    {
+    ): array|string|null {
 
         if (!$this->DOMNode -> attributes) return null;
 
@@ -53,10 +57,17 @@ class DOMNodeParser
     /**
      * 获取 TAG属性
      * @param array $hidden 需要排除的 Tag属性
+     * @param bool $bindValue 是否绑定变量
+     * @param DOMNodeParser|array $DOMNodeParser
      * @return string
      */
-    public function getAttributesToString(array $hidden = []): string
+    public function getAttributesToString(array $hidden = [], bool $bindValue = false, DOMNodeParser|array $DOMNodeParser = []): string
     {
+        if ($bindValue) {
+            if (!$DOMNodeParser) $this->attributeBindValue -> setDOMNodeParser($DOMNodeParser);
+            return $this->attributeBindValue -> setAttributesValue($hidden) -> attributesToString();
+        }
+
         $attr = "";
         foreach ($this->DOMNode -> attributes as $item) {
             if (!in_array($item -> nodeName, $hidden)) {
@@ -66,9 +77,20 @@ class DOMNodeParser
         return trim($attr);
     }
 
-    public function innerHtml(): string
+    /**
+     * 获取当前节点内容
+     * @param array $hiddenAttr 需要排除的 Tag属性
+     * @param string $content 当前节点内容
+     * @return string
+     */
+    public function innerHtml(array $hiddenAttr = [], string $content = ""): string
     {
-        return $this->DOMNode -> C14N();
+        return sprintf("<%s %s>%s</%s>", ...[
+            $this->DOMNode -> nodeName,
+            $this -> getAttributesToString($hiddenAttr, true, $this),
+            $content ?: $this->DOMNode -> nodeValue,
+            $this->DOMNode -> nodeName,
+        ]);
     }
 
     /**

@@ -1,4 +1,5 @@
 {
+    "minimum-stability": "stable",
     "name": "iflow/template",
     "description": "iflow_template",
     "type": "library",
@@ -19,7 +20,6 @@
             "email": "2461082216@qq.com"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
         "php": ">=8.0.0",
         "ext-dom": "*",

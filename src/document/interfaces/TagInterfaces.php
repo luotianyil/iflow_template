@@ -7,7 +7,7 @@ use iflow\template\config\Config;
 use iflow\template\document\Parser\DOMNodeParser;
 use iflow\template\document\Parser\ParserHtml;
 
-interface Tag
+interface TagInterfaces
 {
     public function parser(DOMNodeParser $node, Config $config, ParserHtml $parserHtml): static;
 

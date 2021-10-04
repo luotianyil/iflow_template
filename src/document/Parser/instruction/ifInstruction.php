@@ -23,8 +23,11 @@ class ifInstruction extends instructionAbstract
      */
     public function nextSiblingInstruction(): bool
     {
-        return $this->nextSibling -> getAttributes('i-else')
-        || $this->nextSibling -> getAttributes('i-elseif');
+        $attr = $this->nextSibling -> getAttributes('i-else');
+        if (is_string($attr)) {
+            return true;
+        }
+        return $this->nextSibling -> getAttributes('i-elseif');
     }
 
 
@@ -42,7 +45,7 @@ class ifInstruction extends instructionAbstract
             return "elseif";
         }
 
-        if ($this->DOMNodeParser -> getAttributes('i-else') !== null) {
+        if (is_string($this->DOMNodeParser -> getAttributes('i-else'))) {
             return "else";
         }
 

@@ -5,12 +5,12 @@ namespace iflow\template\document\abstracts;
 
 
 use iflow\template\config\Config;
-use iflow\template\document\interfaces\Tag;
+use iflow\template\document\interfaces\TagInterfaces;
 use iflow\template\document\Parser\DOMNodeParser;
 use iflow\template\document\Parser\ParserHtml;
 use iflow\template\document\Parser\PHPTag;
 
-abstract class tagAbstract implements Tag
+abstract class tagAbstract implements TagInterfaces
 {
     public string $tagName = "tag";
     public array $attributes = [];
@@ -94,12 +94,7 @@ abstract class tagAbstract implements Tag
         // TODO: Implement toHtml() method.
         $this->hiddenAttributes = array_merge_recursive($this->hiddenAttributes, $this->parserHtml -> getConfig() -> getHiddenAttributes());
 
-        $attrs = "";
-        foreach ($this->attributes as $attributeName => $attributeValue) {
-            if (!in_array($attributeName, $this->hiddenAttributes)) {
-                $attrs .= "${attributeName}=\"${attributeValue}\" ";
-            }
-        }
+        $attrs = $this->node -> getAttributesToString($this->hiddenAttributes, true, $this->attributes);
 
         if ($this->defaultTagName === "") {
             $html = sprintf("%s", $this->html);

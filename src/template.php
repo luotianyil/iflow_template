@@ -6,8 +6,9 @@ namespace iflow\template;
 use iflow\template\config\Config;
 use iflow\template\document\RenderView;
 use iflow\template\exception\templateViewNotFound;
+use iflow\template\interfaces\templateInterfaces;
 
-class template
+class template implements templateInterfaces
 {
 
     protected array $data = [];
@@ -49,9 +50,7 @@ class template
         }
 
         $file = $this->config -> getViewRootPath() . $template . '.' . $this->config -> getViewSuffix();
-        if (!file_exists($file)) {
-            throw new templateViewNotFound();
-        }
+        $this->exists($file);
 
         $content = file_get_contents($file);
         $viewRender = new RenderView($content);
@@ -167,5 +166,20 @@ class template
         $info = ob_get_contents();
         ob_end_clean();
         return $info;
+    }
+
+    /**
+     * 验证视图文件是否存在
+     * @param string $file
+     * @return bool
+     * @throws templateViewNotFound
+     */
+    public function exists(string $file): bool
+    {
+        // TODO: Implement exists() method.
+        if (!file_exists($file)) {
+            throw new templateViewNotFound();
+        }
+        return true;
     }
 }

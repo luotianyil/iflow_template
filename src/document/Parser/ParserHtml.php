@@ -48,17 +48,13 @@ class ParserHtml
                 } else {
                     $html .= $this->parserPHPInstruction(
                         $dom,
-                        sprintf("<%s %s>%s</%s>", ...[
-                            $dom -> nodeName,
-                            // 过滤指令
-                            $dom -> getAttributesToString($this->config -> getHiddenAttributes()),
-                            $this->traverseNodes($dom),
-                            $dom -> nodeName
-                        ])
+                        $dom -> innerHtml($this->config -> getHiddenAttributes(), $this->traverseNodes($dom))
                     );
                 }
             } else {
-                $html .= $parserPhp ?: $this->parserPHPInstruction($dom, $dom -> innerHtml());
+                $html .= $parserPhp ?: $this->parserPHPInstruction(
+                    $dom, $dom -> innerHtml($this->config -> getHiddenAttributes())
+                );
             }
         }
 

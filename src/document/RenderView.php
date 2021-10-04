@@ -82,6 +82,10 @@ class RenderView
         return $header ?-> item(0);
     }
 
+    /**
+     * 获取当前文档全部节点数据
+     * @return DOMNode|null
+     */
     public function getHtmlNode(): DOMNode|null
     {
         $html = $this->domDocument -> getElementsByTagName('html');
@@ -96,8 +100,10 @@ class RenderView
      */
     public function htmlToPHPCode(Config $config): string
     {
-        return (new ParserHtml($config, $this))
-            -> traverseNodes();
+        return sprintf(
+            "<!doctype html><html>%s</html>",
+            (new ParserHtml($config, $this)) -> traverseNodes()
+        );
     }
 
     public function __call(string $name, array $arguments)
