@@ -25,7 +25,7 @@ class AttributeBindValue
         foreach ($this->DOMNodeParser as $key => $value) {
             if (!in_array($key, $hidden)) {
                 if (str_starts_with($key, ':')) {
-                    $this->attrs .= ltrim($key, ':')."=\"<?=$value?>\"";
+                    $this->attrs .= ltrim($key, ':')."=\"<?=$value?>\" ";
                 } else {
                     $this->attrs .= " $key=\"$value\" ";
                 }

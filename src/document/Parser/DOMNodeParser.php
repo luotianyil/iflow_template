@@ -85,11 +85,15 @@ class DOMNodeParser
      */
     public function innerHtml(array $hiddenAttr = [], string $content = ""): string
     {
-        return sprintf("<%s %s>%s</%s>", ...[
-            $this->DOMNode -> nodeName,
+        $node = $this->DOMNode -> nodeName;
+        $node = match ($node) {
+            '#comment' => '<!-- %s %s -->',
+            default => "<$node %s>%s</$node>",
+        };
+
+        return sprintf($node, ...[
             $this -> getAttributesToString($hiddenAttr, true, $this),
-            $content ?: $this->DOMNode -> nodeValue,
-            $this->DOMNode -> nodeName,
+            $content ?: $this->DOMNode -> nodeValue
         ]);
     }
 
