@@ -8,6 +8,8 @@ use DOMNode;
 use DOMNodeList;
 use iflow\template\config\Config;
 use iflow\template\document\Parser\ParserHtml;
+use iflow\template\document\Parser\utils\Community;
+use iflow\template\document\Parser\utils\Literal;
 
 /**
  * Class RenderView
@@ -17,15 +19,21 @@ use iflow\template\document\Parser\ParserHtml;
 class RenderView
 {
     protected DOMDocument $domDocument;
+    protected Literal $literal;
 
     public function __construct(DOMDocument|string $domDocument)
     {
         // 忽略检查 TAG 标签
         libxml_use_internal_errors(true);
+
+        $this->literal = new Literal();
+
         if (is_string($domDocument)) {
             $html = $domDocument;
             $domDocument = new DOMDocument();
-            $domDocument -> loadHTML($html);
+            $domDocument -> loadHTML(
+                $this->literal -> literal($html)
+            );
         }
         $this->domDocument = $domDocument;
     }
@@ -100,11 +108,15 @@ class RenderView
      */
     public function htmlToPHPCode(Config $config): string
     {
-        return sprintf(
-            "<!doctype html><html>%s</html>",
+        $html = $this->literal -> out_literal(
             (new ParserHtml($config, $this)) -> traverseNodes()
         );
+        return sprintf(
+            "<!doctype html><html>%s</html>",
+            $html
+        );
     }
+
 
     public function __call(string $name, array $arguments)
     {

@@ -30,9 +30,6 @@ class Config
             'function' => [
                 'class' => functionTag::class
             ],
-            'literal' => [
-                'class' => Literal::class
-            ],
             'include' => [
                 'class' => includeTag::class
             ]

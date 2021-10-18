@@ -20,15 +20,17 @@ class AttributeBindValue
      * @param array $hidden | 需要隐藏的TAG
      * @return static
      */
-    public function setAttributesValue(array $hidden = []): static
-    {
+    public function setAttributesValue(array $hidden = []): static {
         foreach ($this->DOMNodeParser as $key => $value) {
             if (!in_array($key, $hidden)) {
                 if (str_starts_with($key, ':')) {
-                    $this->attrs .= ltrim($key, ':')."=\"<?=$value?>\" ";
+                    $key = ltrim($key, ':');
+                    $nodeValue = $key === 'attr-anchor' ? "#<?=$value?>" : "\"<?=$value?>\"";
                 } else {
-                    $this->attrs .= " $key=\"$value\" ";
+                    $nodeValue = $key === 'attr-anchor' ? "#$value" : "\"$value\"";
                 }
+                $key = $key === 'attr-anchor' ? '' : "$key=";
+                $this->attrs .= " $key$nodeValue";
             }
         }
         return $this;

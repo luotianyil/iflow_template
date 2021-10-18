@@ -71,7 +71,8 @@ class DOMNodeParser
         $attr = "";
         foreach ($this->DOMNode -> attributes as $item) {
             if (!in_array($item -> nodeName, $hidden)) {
-                $attr .= "{$item -> nodeName}=\"{$item -> nodeValue}\" ";
+                $nodeValue = $item -> nodeName === 'attr-anchor' ? "#{$item -> nodeValue}" : $item -> nodeValue;
+                $attr .= "{$item -> nodeName}=\"{$nodeValue}\" ";
             }
         }
         return trim($attr);
