@@ -7,7 +7,7 @@ namespace iflow\template\document\Parser\utils;
 class Literal
 {
 
-    protected array $literalHtml;
+    protected array $literalHtml = [];
 
 
     /**
@@ -24,7 +24,7 @@ class Literal
             $html_literal
         );
 
-        if (empty($html_literal)) return $html;
+        if (empty($html_literal[0])) return $html;
 
         foreach ($html_literal[0] as $iKey => $tag) {
             $uuid = uniqid('iflowTemplate_literal_'). (new Community()) -> create_uuid();
