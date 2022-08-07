@@ -5,13 +5,13 @@ namespace iflow\template\document\Tag;
 
 
 use iflow\template\config\Config;
-use iflow\template\document\abstracts\tagAbstract;
+use iflow\template\document\abstracts\TagAbstract;
 use iflow\template\document\exception\templateException;
 use iflow\template\document\Parser\DOMNodeParser;
 use iflow\template\document\Parser\ParserHtml;
 use iflow\template\document\RenderView;
 
-class includeTag extends tagAbstract
+class IncludeTag extends TagAbstract
 {
 
     protected array $hiddenAttributes = [

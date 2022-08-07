@@ -12,7 +12,10 @@
     "autoload-dev": {
         "psr-4": {
             "iflowTest\\": "tests"
-        }
+        },
+        "files": [
+            "src/helper.php"
+        ]
     },
     "authors": [
         {
@@ -24,6 +27,7 @@
         "php": ">=8.0.0",
         "ext-dom": "*",
         "ext-libxml": "*",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "ext-mbstring": "*"
     }
 }

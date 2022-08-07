@@ -6,11 +6,12 @@ namespace iflow\template\config;
 
 use iflow\template\document\Parser\instruction\forInstruction;
 use iflow\template\document\Parser\instruction\ifInstruction;
+use iflow\template\document\Tag\ClassTag;
 use iflow\template\document\Tag\Db;
-use iflow\template\document\Tag\echoTag;
-use iflow\template\document\Tag\functionTag;
-use iflow\template\document\Tag\includeTag;
-use iflow\template\document\Tag\Literal;
+use iflow\template\document\Tag\EchoTag;
+use iflow\template\document\Tag\FunctionTag;
+use iflow\template\document\Tag\IncludeTag;
+use iflow\template\document\Tag\literalTag;
 use iflow\template\document\Tag\PHPScript;
 
 class Config
@@ -25,13 +26,19 @@ class Config
                 'class' => PHPScript::class
             ],
             'echo' => [
-                'class' => echoTag::class
+                'class' => EchoTag::class
             ],
             'function' => [
-                'class' => functionTag::class
+                'class' => FunctionTag::class
             ],
             'include' => [
-                'class' => includeTag::class
+                'class' => IncludeTag::class
+            ],
+            'literal' => [
+                'class' => literalTag::class
+            ],
+            'iclass' => [
+                'class' => ClassTag::class
             ]
         ],
         // 自定义指令

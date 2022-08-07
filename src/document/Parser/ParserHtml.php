@@ -42,20 +42,12 @@ class ParserHtml
             }
             $dom = new DOMNodeParser($item);
             $parserPhp = $this->parserPHPTag($dom);
-            if ($dom -> childNodes -> count() > 0) {
-                if ($parserPhp) {
-                    $html .= $parserPhp;
-                } else {
-                    $html .= $this->parserPHPInstruction(
-                        $dom,
-                        $dom -> innerHtml($this->config -> getHiddenAttributes(), $this->traverseNodes($dom))
-                    );
-                }
-            } else {
-                $html .= $parserPhp ?: $this->parserPHPInstruction(
-                    $dom, $dom -> innerHtml($this->config -> getHiddenAttributes())
-                );
-            }
+
+            $html .= $parserPhp ?: $this->parserPHPInstruction(
+                $dom, $dom -> innerHtml(
+                    $this->config -> getHiddenAttributes(),
+                $dom -> childNodes -> count() > 0 ? $this->traverseNodes($dom) : '')
+            );
         }
 
         return html_entity_decode($html);

@@ -139,6 +139,19 @@ class DOMNodeParser
         return new DOMNodeParser($node);
     }
 
+    /**
+     * 将下级子节点以字符串方式返回
+     * @return string
+     */
+    public function toString(): string {
+        $innerHTML ="";
+        $children  = $this->childNodes;
+        foreach ($children as $child)  {
+            $innerHTML .= $this->ownerDocument->saveHTML($child);
+        }
+        return $innerHTML;
+    }
+
     public function __get(string $name)
     {
         // TODO: Implement __get() method.

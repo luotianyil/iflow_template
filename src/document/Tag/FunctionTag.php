@@ -9,15 +9,14 @@ use iflow\template\document\abstracts\tagAbstract;
 use iflow\template\document\Parser\DOMNodeParser;
 use iflow\template\document\Parser\ParserHtml;
 
-class functionTag extends tagAbstract
-{
+class FunctionTag extends TagAbstract {
 
     protected array $hiddenAttributes = [
         "action", "paramsname", "props", "tag"
     ];
 
-    protected string|null $action = "";
-    protected string|null $paramsName = "";
+    protected ?string $action = "";
+    protected ?string $paramsName = "";
 
     public function parser(DOMNodeParser $node, Config $config, ParserHtml $parserHtml): static
     {
@@ -25,8 +24,7 @@ class functionTag extends tagAbstract
         $this->action = $this->node -> getAttributes('action');
         $this->paramsName = $this->node -> getAttributes('paramsName');
 
-        $this->parserAttributes();
-        return $this;
+        return $this->parserAttributes();
     }
 
     public function parserAttributes(): static

@@ -8,7 +8,6 @@ use DOMNode;
 use DOMNodeList;
 use iflow\template\config\Config;
 use iflow\template\document\Parser\ParserHtml;
-use iflow\template\document\Parser\utils\Community;
 use iflow\template\document\Parser\utils\Literal;
 
 /**
@@ -19,6 +18,7 @@ use iflow\template\document\Parser\utils\Literal;
 class RenderView
 {
     protected DOMDocument $domDocument;
+
     protected Literal $literal;
 
     public function __construct(DOMDocument|string $domDocument)
@@ -26,14 +26,13 @@ class RenderView
         // 忽略检查 TAG 标签
         libxml_use_internal_errors(true);
 
-        $this->literal = new Literal();
-
         if (is_string($domDocument)) {
+
+            $this->literal = new Literal();
             $html = $domDocument;
             $domDocument = new DOMDocument();
-            $domDocument -> loadHTML(
-                $this->literal -> literal($html)
-            );
+
+            $domDocument -> loadHTML(mb_convert_encoding($this->literal -> literal($html), 'HTML-ENTITIES', 'UTF-8'));
         }
         $this->domDocument = $domDocument;
     }
@@ -42,8 +41,7 @@ class RenderView
      * 获取Body
      * @return DOMNode|null
      */
-    public function getBody(): DOMNode|null
-    {
+    public function getBody(): DOMNode|null {
         $body = $this->domDocument -> getElementsByTagName('body');
         return $body -> item(0);
     }
@@ -106,11 +104,8 @@ class RenderView
      * @return string
      * @throws \Exception
      */
-    public function htmlToPHPCode(Config $config): string
-    {
-        $html = $this->literal -> out_literal(
-            (new ParserHtml($config, $this)) -> traverseNodes()
-        );
+    public function htmlToPHPCode(Config $config): string {
+        $html = $this->literal -> out_literal((new ParserHtml($config, $this)) -> traverseNodes());
         return sprintf(
             "<!doctype html><html>%s</html>",
             $html

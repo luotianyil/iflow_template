@@ -9,8 +9,8 @@ use iflow\template\document\abstracts\tagAbstract;
 use iflow\template\document\Parser\DOMNodeParser;
 use iflow\template\document\Parser\ParserHtml;
 
-class echoTag extends tagAbstract
-{
+class EchoTag extends TagAbstract {
+
     public string $tagName = "echo";
     protected array $hiddenAttributes = ["tag"];
 

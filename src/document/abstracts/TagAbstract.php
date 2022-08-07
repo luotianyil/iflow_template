@@ -10,7 +10,7 @@ use iflow\template\document\Parser\DOMNodeParser;
 use iflow\template\document\Parser\ParserHtml;
 use iflow\template\document\Parser\PHPTag;
 
-abstract class tagAbstract implements TagInterfaces
+abstract class TagAbstract implements TagInterfaces
 {
     public string $tagName = "tag";
     public array $attributes = [];

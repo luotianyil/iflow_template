@@ -9,8 +9,8 @@ use iflow\template\document\abstracts\tagAbstract;
 use iflow\template\document\Parser\DOMNodeParser;
 use iflow\template\document\Parser\ParserHtml;
 
-class Db extends tagAbstract
-{
+class Db extends TagAbstract {
+
     public string $tagName = "db";
 
     // 查询语句

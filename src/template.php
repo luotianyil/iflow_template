@@ -8,8 +8,7 @@ use iflow\template\document\RenderView;
 use iflow\template\exception\templateViewNotFound;
 use iflow\template\interfaces\templateInterfaces;
 
-class template implements templateInterfaces
-{
+class template implements templateInterfaces {
 
     protected array $data = [];
 
@@ -116,7 +115,7 @@ class template implements templateInterfaces
     /**
      * 储存编译后的视图文件
      * @param string $template
-     * @param $content
+     * @param string $content
      * @return string
      */
     protected function saveCacheFile(string $template, string $content): string

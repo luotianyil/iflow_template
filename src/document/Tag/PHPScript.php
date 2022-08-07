@@ -9,11 +9,11 @@ use iflow\template\document\abstracts\tagAbstract;
 use iflow\template\document\Parser\DOMNodeParser;
 use iflow\template\document\Parser\ParserHtml;
 
-class PHPScript extends tagAbstract
-{
+class PHPScript extends TagAbstract {
+
     public string $tagName = "phpScript";
 
-    protected array $hiddenAttributes = ['tag'];
+    protected array $hiddenAttributes = [ 'tag' ];
 
     public function parser(DOMNodeParser $node, Config $config, ParserHtml $parserHtml): static
     {
