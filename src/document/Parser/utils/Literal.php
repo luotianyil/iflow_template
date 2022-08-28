@@ -18,8 +18,9 @@ class Literal {
 
         preg_match_all('/(?:(literal)\b(?>(?:(?!).)*)|\/(literal))/is', $html, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
 
-        $right = [];
+        if (empty($matches)) return $html;
 
+        $right = [];
         $tool = new Community();
 
         foreach ($matches as $match) {
