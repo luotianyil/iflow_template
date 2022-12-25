@@ -32,7 +32,7 @@ class RenderView
             $html = $domDocument;
             $domDocument = new DOMDocument();
 
-            $domDocument -> loadHTML(mb_convert_encoding($this->literal -> literal($html), 'HTML-ENTITIES', 'UTF-8'));
+            $domDocument -> loadHTML($this->literal -> literal($html));
         }
         $this->domDocument = $domDocument;
     }
