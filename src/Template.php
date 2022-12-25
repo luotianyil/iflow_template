@@ -5,10 +5,10 @@ namespace iflow\template;
 
 use iflow\template\config\Config;
 use iflow\template\document\RenderView;
-use iflow\template\exception\templateViewNotFound;
-use iflow\template\interfaces\templateInterfaces;
+use iflow\template\exception\TemplateViewNotFound;
+use iflow\template\interfaces\TemplateInterfaces;
 
-class template implements templateInterfaces {
+class Template implements TemplateInterfaces {
 
     protected array $data = [];
 
@@ -37,24 +37,21 @@ class template implements templateInterfaces {
      * @param array $vars
      * @param array|Config $config
      * @return string
-     * @throws templateViewNotFound
+     * @throws TemplateViewNotFound
+     * @throws \Exception
      */
     public function fetch(string $template = '', array $vars = [], array|Config $config = []): string {
         if ($vars) {
             $this->data = array_merge($this->data, $vars);
         }
 
-        if ($config) {
-            $this->config($config);
-        }
+        if ($config) $this->config($config);
 
         $file = $this->config -> getViewRootPath() . $template . '.' . $this->config -> getViewSuffix();
         $this->exists($file);
 
         $content = file_get_contents($file);
-        $viewRender = new RenderView($content);
-        $viewRenderCode = $viewRender -> htmlToPHPCode($this->config);
-
+        $viewRenderCode = $this->toPhpViewCode($content);
         return $this->render(
             $this->saveCacheFile($template, $viewRenderCode)
         );
@@ -77,12 +74,23 @@ class template implements templateInterfaces {
             $this->config($config);
         }
 
-        $viewRender = new RenderView($content);
-        $viewRenderCode = $viewRender -> htmlToPHPCode($this->config);
+        $viewRenderCode = $this->toPhpViewCode($content);
 
         return $this->render(
             $this->saveCacheFile($content, $viewRenderCode)
         );
+    }
+
+
+    /**
+     * 将模板语法转为PHP模板语法
+     * @param string $templateCode
+     * @return string
+     * @throws \Exception
+     */
+    protected function toPhpViewCode(string $templateCode): string {
+        $viewRender = new RenderView($templateCode);
+        return $viewRender -> htmlToPHPCode($this->config);
     }
 
     /**
@@ -104,12 +112,7 @@ class template implements templateInterfaces {
      */
     protected function getCacheFile(string $template): string
     {
-        return sprintf("%s/%s_%s.%s", ...[
-            $this->config -> getStorePath(),
-            $this->config -> getCachePrefix(),
-            md5($template),
-            $this->config -> getViewSuffix()
-        ]);
+        return sprintf("%s/%s_%s.%s", $this->config->getStorePath(), $this->config->getCachePrefix(), md5($template), $this->config->getViewSuffix());
     }
 
     /**
@@ -156,8 +159,7 @@ class template implements templateInterfaces {
      * @param string $viewPath
      * @return string
      */
-    public function render(string $viewPath): string
-    {
+    public function render(string $viewPath): string {
         ob_start();
         ob_implicit_flush(0);
         extract($this->data, EXTR_OVERWRITE);
@@ -171,13 +173,13 @@ class template implements templateInterfaces {
      * 验证视图文件是否存在
      * @param string $file
      * @return bool
-     * @throws templateViewNotFound
+     * @throws TemplateViewNotFound
      */
     public function exists(string $file): bool
     {
         // TODO: Implement exists() method.
         if (!file_exists($file)) {
-            throw new templateViewNotFound();
+            throw new TemplateViewNotFound();
         }
         return true;
     }
@@ -186,8 +188,7 @@ class template implements templateInterfaces {
      * @param array $data
      * @return static
      */
-    public function setData(array $data): static
-    {
+    public function setData(array $data): static {
         $this->data = $data;
         return $this;
     }

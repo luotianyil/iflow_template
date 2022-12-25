@@ -60,7 +60,7 @@ class ifInstruction extends instructionAbstract
     {
         $self = $this->selfInstruction();
         if ($self === 'else') {
-            return "<?php $self: ?>%s<?php endif;?>";
+            return "<?php {$self}: ?>%s<?php endif;?>";
         }
         if ($this->nextSiblingInstruction()) {
             return "<?php $self({$this -> instructionCode}): ?>%s";

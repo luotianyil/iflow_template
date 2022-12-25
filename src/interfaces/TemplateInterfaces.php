@@ -6,7 +6,7 @@ namespace iflow\template\interfaces;
 
 use iflow\template\config\Config;
 
-interface templateInterfaces
+interface TemplateInterfaces
 {
     public function config(array|Config $config);
 

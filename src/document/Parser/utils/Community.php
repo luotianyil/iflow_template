@@ -13,7 +13,7 @@ class Community
      * @url https://www.php.net/manual/en/function.com-create-guid.php
      * @return string
      */
-    public function create_uuid($trim = true) : string
+    public function create_uuid(bool $trim = true) : string
     {
         // Windows
         if (function_exists('com_create_guid') === true) {
@@ -34,14 +34,13 @@ class Community
         $hyphen = chr(45);                  // "-"
         $lbrace = $trim ? "" : chr(123);    // "{"
         $rbrace = $trim ? "" : chr(125);    // "}"
-        $guidv4 = $lbrace.
+        return $lbrace.
             substr($charid,  0,  8).$hyphen.
             substr($charid,  8,  4).$hyphen.
             substr($charid, 12,  4).$hyphen.
             substr($charid, 16,  4).$hyphen.
             substr($charid, 20, 12).
             $rbrace;
-        return $guidv4;
     }
 
 }

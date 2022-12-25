@@ -3,5 +3,6 @@
 /.git
 /vendor
 /tests
+/runtime
 composer.lock
 phpunit.xml

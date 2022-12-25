@@ -99,12 +99,12 @@ abstract class TagAbstract implements TagInterfaces
         if ($this->defaultTagName === "") {
             $html = sprintf("%s", $this->html);
         } else {
-            $html = sprintf("<%s %s>%s</%s>", ...[
+            $html = sprintf("<%s %s>%s</%s>",
                 $this->defaultTagName,
                 $attrs,
                 $this->html,
                 $this->defaultTagName
-            ]);
+            );
         }
 
         return $this->parserHtml -> parserPHPInstruction($this->node, $html);

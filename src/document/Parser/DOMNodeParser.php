@@ -89,13 +89,13 @@ class DOMNodeParser
         $node = $this->DOMNode -> nodeName;
         $node = match ($node) {
             '#comment' => '<!-- %s %s -->',
-            default => "<$node %s>%s</$node>",
+            default => "<{$node} %s>%s</{$node}>",
         };
 
-        return sprintf($node, ...[
+        return sprintf($node,
             $this -> getAttributesToString($hiddenAttr, true, $this),
             $content ?: $this->DOMNode -> nodeValue
-        ]);
+        );
     }
 
     /**

@@ -16,9 +16,9 @@ class forInstruction extends instructionAbstract
         $instructionAttrArray = explode(" ", $instructionAttr);
         for ($i = 1; $i < count($instructionAttrArray); $i++) {
             if ($instructionAttrArray[$i] === 'as') {
-                return "<?php foreach ($instructionAttr): ?>%s<?php endforeach; ?>";
+                return "<?php foreach ({$instructionAttr}): ?>%s<?php endforeach; ?>";
             }
         }
-        return "<?php for ($instructionAttr): ?>%s<?php endfor; ?>";
+        return "<?php for ({$instructionAttr}): ?>%s<?php endfor; ?>";
     }
 }

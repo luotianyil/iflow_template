@@ -5,7 +5,7 @@ namespace iflow\template\document\Tag;
 
 
 use iflow\template\Config\Config;
-use iflow\template\document\abstracts\tagAbstract;
+use iflow\template\document\abstracts\TagAbstract;
 use iflow\template\document\Parser\DOMNodeParser;
 use iflow\template\document\Parser\ParserHtml;
 

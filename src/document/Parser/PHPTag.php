@@ -5,7 +5,7 @@ namespace iflow\template\document\Parser;
 
 
 use iflow\template\config\Config;
-use iflow\template\document\abstracts\tagAbstract;
+use iflow\template\document\abstracts\TagAbstract;
 
 class PHPTag
 {
@@ -19,7 +19,7 @@ class PHPTag
         $tag = $this->config -> getTagByName(strtolower($DOMNodeParser -> nodeName));
         if ($tag) {
             $class = new $tag['class'];
-            if ($class instanceof tagAbstract) {
+            if ($class instanceof TagAbstract) {
                 return $class
                         -> parser($DOMNodeParser, $this->config, $parserHtml)
                         -> toHtml();
