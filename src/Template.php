@@ -163,7 +163,7 @@ class Template implements TemplateInterfaces {
         ob_start();
         ob_implicit_flush(0);
         extract($this->data, EXTR_OVERWRITE);
-        include_once $viewPath;
+        include $viewPath;
         $info = ob_get_contents();
         ob_end_clean();
         return $info;
