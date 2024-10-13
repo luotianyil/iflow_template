@@ -11,20 +11,28 @@ use iflow\template\document\Parser\ParserHtml;
 
 class Db extends TagAbstract {
 
-    public string $tagName = "db";
+    public string $tagName = 'db';
 
     // 查询语句
-    protected string|null $sql = "";
+    protected string|null $sql = '';
 
     // 查询方法
-    protected string|null $queryAction = "";
+    protected string|null $queryAction = '';
+
     // 查询模型
-    protected string $queryModel = "";
-    protected string|null $parameterName = "";
+    protected string $queryModel = '';
+
+    protected string|null $parameterName = '';
+
+    protected string $DB = "\\iflow\\facade\\Db";
 
     protected array $hiddenAttributes = [
         'action', 'model', 'sql', 'parametername', 'props', 'tag'
     ];
+
+    public function __construct() {
+        $this->DB = class_exists($this -> DB) ? $this->DB : "\\think\\facade\\Db";
+    }
 
     public function parser(DOMNodeParser $node, Config $config, ParserHtml $parserHtml): static
     {
@@ -36,15 +44,14 @@ class Db extends TagAbstract {
         return $this->parserAttributes();
     }
 
-    public function parserAttributes(): static
-    {
+    public function parserAttributes(): static {
         // TODO: Implement parserAttributes() method.
         $this->html .= "<?php ";
         $this->html .= $this->parameterName ? "{$this -> parameterName} = " : "";
         $props = $this -> props ? "...[{$this -> props}]" : "";
 
         if ($this->sql) {
-            $this->html .= "\\think\\facade\\Db::{$this -> queryAction}(\"{$this->sql}\", $props)";
+            $this->html .= "$this->DB::{$this -> queryAction}(\"{$this->sql}\", $props)";
         } else if ($this->queryModel) {
             $this->html .= "app('{$this -> queryModel}') -> {$this -> queryAction}($props)";
         }
